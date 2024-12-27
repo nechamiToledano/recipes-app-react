@@ -1,11 +1,11 @@
 
 import './App.css'
-import HomePage from './components/HomePage'
+import AppUser from './components/AppUser'
 function App() {
 
   return (
     <>
-     <HomePage/>
+     <AppUser/>
     </>
   )
 }

@@ -7,11 +7,14 @@ export type UserType = {
   password: string;
   address: string;
   phone: string;
+  imagePreview: string;
 } | null;
 
 type Action =
-   { type: "CREATE_USER"; data: UserType }
-  | { type: "EDIT_USER"; data: Partial<UserType> }
+  | { type: "LOGIN"; data: UserType }
+  | { type: "EDIT"; data: Partial<UserType> }|
+  { type: "LOGOUT"; }|
+  { type: "REGISTER"; data: UserType}
   | { type: "REMOVE_USER" };
 
 export const UserContext = createContext<{
@@ -24,16 +27,17 @@ export const UserContext = createContext<{
 
 const userReducer = (state: UserType, action: Action): UserType => {
   switch (action.type) {
-    case "CREATE_USER":
-      return { ...action.data } as UserType;
-      case "EDIT_USER":
-        return state ? { ...state, ...action.data } : state;
-      
+  
+      case "REGISTER":
+        return { ...action.data } as UserType;
+    case "EDIT":
+      return state ? { ...state, ...action.data } : state;
+
     case "REMOVE_USER":
       return null;
     default:
-        return state;
-    }
+      return state;
+  }
 };
 
 export default userReducer;

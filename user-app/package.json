@@ -10,13 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.3.0",
+    "@mui/material": "^6.3.0",
+    "@mui/styled-engine-sc": "^6.3.0",
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^18.3.1",
+    "styled-components": "^6.1.13"
   },
   "peerDependencies": {
-  "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
-  "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0"
-},
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0"
+  },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@types/react": "^18.3.17",

@@ -1,163 +1,111 @@
-import React, { useContext, useRef, useState } from "react";
-import { Box, Typography, TextField, Button, styled } from "@mui/material";
+import React, { useContext, useState } from "react";
+import { TextField, Button, Typography, Box, IconButton, Grow } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { UserContext } from "./userReducer";
+import { UserContext, StageContext } from "./userReducer";
 
-const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-});
+export const RegistrationForm = ({ email }: { email: string }) => {
+    const { user , userDispatch } = useContext(UserContext);
+    const { stage, setStage } = useContext(StageContext);
+    const isEditMode = stage === 'edit';
+    const [formData, setFormData] = useState({
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
+        email: email || "",
+        address: user?.address || "",
+        password: user?.password || "",
+        phone: user?.phone || "",
 
-const RegistrationForm = ({
-    onSubmit,
-   
-}: {
-    onSubmit: () => void;
-}) => {
-    const { user, userDispatch } = useContext(UserContext);
-    const [showPassword, setShowPassword] = useState(false);
-    const firstNameRef = useRef<HTMLInputElement>(null);
-    const lastNameRef = useRef<HTMLInputElement>(null);
-    const emailRef = useRef<HTMLInputElement>(null);
-    const addressRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
-    const phoneRef = useRef<HTMLInputElement>(null);
-    const imageRef = useRef<File | null>(null);
+    });
+  const [showPassword, setShowPassword] = useState(false);
+  const titles = isEditMode
+  ? { header: "Edit Your Account", submit: "Keep Changes" } :
+  { header: "Create Your Account", submit: "Register" };
 
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files.length > 0) {
-            imageRef.current = event.target.files[0]; // Store the uploaded file
-        }
-    };
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-   
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-    };
-   
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-        // Extract values from refs
-        const firstName = firstNameRef.current?.value || '';
-        const lastName = lastNameRef.current?.value || '';
-        const email = emailRef.current?.value || '';
-        const address = addressRef.current?.value || '';
-        const password = passwordRef.current?.value || '';
-        const phone = phoneRef.current?.value || '';
-        const imagePreview = imageRef.current?.name ||'' // Assuming you want to store the file name
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const actionType = isEditMode ? "EDIT" : "REGISTER";
+    userDispatch({
+        type: actionType,
+        data: { ...formData },
+    });
+    setStage('home')
+  };
 
-        // Dispatch the user registration action
-        userDispatch({ 
-            type: "REGISTER", 
-            data: { firstName, lastName, email, address, password, phone, imagePreview} 
-        });
-        
-        // Call the onSubmit callback
-        onSubmit();
-    };
-
-    return (
-        <Box>
-            <Typography variant="h5" gutterBottom>
-                 Your Account
-            </Typography>
-            <form onSubmit={handleSubmit}>
-                <TextField
-                    variant="filled"
-                    label="First Name"
-                    fullWidth
-                    required
-                    margin="normal"
-                    value={user?.firstName}
-                    inputRef={firstNameRef}
-                />
-                <TextField
-                    variant="filled"
-                    label="Last Name"
-                    fullWidth
-                    required
-                    value={user?.lastName}
-                    margin="normal"
-                    inputRef={lastNameRef}
-                />
-                <TextField
-                    variant="filled"
-                    label="Email"
-                    type="email"
-                    fullWidth
-                    required
-                    defaultValue={user?.email}
-                    margin="normal"
-                    disabled
-                    inputRef={emailRef}
-                    
-                />
-                <TextField
-                    variant="filled"
-                    label="Address"
-                    fullWidth
-                    required
-                    margin="normal"
-                    inputRef={addressRef}
-                    value={user?.address}
-                />
-                <TextField
-                    variant="filled"
-                    label="Password"
-                    type={showPassword ? "text" : "password"}
-                    fullWidth
-                    required
-                    margin="normal"
-                    inputRef={passwordRef}
-                    value={user?.password}
-                    InputProps={{
-                        endAdornment: (
-                            <Button
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                            >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </Button>
-                        ),
-                    }}
-                />
-                <TextField
-                    variant="filled"
-                    label="Phone"
-                    fullWidth
-                    required
-                    margin="normal"
-                    inputRef={phoneRef}
-                    value={user?.phone}
-                />
-                <Button
-                    component="label"
-                    startIcon={<CloudUploadIcon />}
-                >
-                    Upload Image
-                    <VisuallyHiddenInput
-                        type="file"
-                        accept="image/*" 
-                        onChange={handleImageUpload}
-                        
-                    />
-                </Button>
-                <Button type="submit" fullWidth>
-                    Register
-                </Button>
-            </form>
-        </Box>
-    );
+  return (
+    <Grow in>
+      <Box
+        sx={{
+          p: 4,
+          bgcolor: "background.paper",
+          borderRadius: 2,
+          boxShadow: 6,
+          maxWidth: 400,
+          mx: "auto",
+          mt: 10,
+          transition: "all 0.3s ease",
+          "&:hover": { boxShadow: 10, transform: "translateY(-5px)" },
+        }}
+      >
+        <Typography variant="h5" gutterBottom>
+        {titles.header}
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          {["firstName", "lastName", "address", "phone"].map((field) => (
+            <TextField
+              key={field}
+              label={field.replace(/^\w/, (c) => c.toUpperCase())}
+              name={field}
+              value={formData[field as keyof typeof formData]}
+              onChange={handleChange}
+              fullWidth
+              required
+              margin="normal"
+              variant="outlined"
+            />
+          ))}
+          <TextField
+            label="Password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+            variant="outlined"
+            InputProps={{
+              endAdornment: (
+                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              ),
+            }}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{
+              mt: 2,
+              py: 1.5,
+              fontWeight: "bold",
+              textTransform: "none",
+              boxShadow: 3,
+              "&:hover": { boxShadow: 6, bgcolor: "primary.dark" },
+            }}
+          >
+             {titles.submit}
+          </Button>
+        </form>
+      </Box>
+    </Grow>
+  );
 };
-
-export default RegistrationForm;
+export default RegistrationForm

@@ -7,8 +7,10 @@ export type UserType = {
   password: string;
   address: string;
   phone: string;
-  imagePreview: string;
+ 
 } | null;
+
+export type StageType ="login" | "email" | "password" | "register" |"edit"| "home";
 
 type Action =
   | { type: "LOGIN"; data: UserType }
@@ -23,6 +25,15 @@ export const UserContext = createContext<{
 }>({
   user: null,
   userDispatch: () => null,
+});
+
+
+export const StageContext = createContext<{
+    stage: StageType;
+    setStage: (stage: StageType) => void;
+}>({
+    stage: "login",
+    setStage: () => {},
 });
 
 const userReducer = (state: UserType, action: Action): UserType => {

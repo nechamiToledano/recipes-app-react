@@ -1,61 +1,107 @@
-import { createContext, useContext, useReducer, useState } from "react";
-import { CssBaseline, Container, Box, Button } from "@mui/material";
+import { useContext, useReducer, useState } from "react";
+import {
+    CssBaseline,
+    Container,
+    Box,
+    Button,
+ 
+} from "@mui/material";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import RegistrationForm from "./RegistrationForm";
 import HomePage from "./HomePage";
-import userReducer, { UserContext, UserType } from "./userReducer";
-import LoginIcon from '@mui/icons-material/Login';
+import userReducer, { UserContext, UserType, StageContext, StageType } from "./userReducer";
+import LoginIcon from "@mui/icons-material/Login";
 
 const AppUser = () => {
-  const initialState: UserType = null;
-  const [user, userDispatch] = useReducer(userReducer, initialState);
-  const [stage, setStage] = useState<"login" | "email" | "password" | "register" |"edit"| "home">("login");
-  const [email, setEmail] = useState("");
+    const initialState: UserType = null;
+    const [user, userDispatch] = useReducer(userReducer, initialState);
 
-  const handleEmailSubmit = (email: string) => {
-    setEmail(email);
-    console.log(user);
-    setStage(user?.email === email ? "password" : "register");
-  };
+    // Use state for stage management
+    const [stage, setStage] = useState<StageType>("login");
+    const [email, setEmail] = useState("");
 
-  const handlePasswordSubmit = (password: string) => {
+    // Handle email submission
+    const handleEmailSubmit = (email: string) => {
+        setEmail(email);
+        if(user?.email!==email) {
+            userDispatch({type:"REMOVE_USER"});
+            setStage("register")
+        }
+        else setStage("password");
+    };
 
-    if (user?.password === password) {
-      userDispatch({ type: "LOGIN", data: user });
-      setStage("home");
-    } else {
-      alert("Invalid password");
-    }
-  };
+    // Handle password submission
+    const handlePasswordSubmit = (password: string) => {
+        if (user?.password === password) {
+            userDispatch({ type: "LOGIN", data: user });
+            setStage("home");
+        } else {
+            alert("Invalid password");
+        }
+    };
 
-  const handleRegister = () => {
-    setStage("home");
-  };
+    return (
+        <UserContext.Provider value={{ user, userDispatch }}>
+            <StageContext.Provider value={{ stage, setStage }}>
+                <CssBaseline />
+                <Container>
 
-  const handleLogout = () => {
-    setStage("login");
-  };
-  const handleEdit = () => {
-    setStage("edit");
-  };
-  return (
- <UserContext.Provider  value={{ user,userDispatch }}>
-    
-    <CssBaseline>
-      {stage === "login" && <Button variant="contained" onClick={() => { setStage("email")}} endIcon={<LoginIcon />}>Login</Button>}
-      <Container maxWidth="sm">
-        <Box mt={5}>
-          {stage === "email" && <EmailInput onSubmit={handleEmailSubmit} />}
-          {stage === "password" && <PasswordInput onSubmit={handlePasswordSubmit} email={email} />}
-          {stage === "register" && <RegistrationForm onSubmit={handleRegister} email={email} />}
-          {stage === "edit" && <RegistrationForm onSubmit={handleRegister} email={email} />}
-          {stage === "home" && <HomePage onLogout={handleLogout} onEdit={handleEdit}/>}
-        </Box>
-      </Container>
-    </CssBaseline>
-    </UserContext.Provider>
-  );
+                    {stage === "login" && (
+                        <Box
+                            sx={{
+                                position: "absolute",
+                                top: 20,
+                                left: 20,
+                            }}
+                        >
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                                onClick={() => setStage("email")}
+                                endIcon={<LoginIcon />}
+                                sx={{
+                                    py: 1.5,
+                                    textTransform: "none",
+                                    fontSize: "1.1rem",
+                                }}
+                            >
+                                Login
+                            </Button>
+                        </Box>
+                    )}
+
+                    { stage === "home" && <HomePage />}
+
+                    {stage === "email" && (
+                        <Box mt={3}>
+                            <EmailInput onSubmit={handleEmailSubmit} />
+                        </Box>
+                    )}
+
+                    {stage === "password" && (
+                        <Box mt={3}>
+                            <PasswordInput onSubmit={handlePasswordSubmit} />
+                        </Box>
+                    )}
+
+                    {stage === "register" && (
+                        <Box mt={3}>
+                            <RegistrationForm email={email} />
+                        </Box>
+                    )}
+
+                    {stage === "edit" && (
+                        <Box mt={3}>
+                            <RegistrationForm email={email} />
+                        </Box>
+                    )}
+
+                </Container>
+            </StageContext.Provider>
+        </UserContext.Provider>
+    );
 };
 
 export default AppUser;

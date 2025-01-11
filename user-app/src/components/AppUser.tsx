@@ -1,103 +1,54 @@
-import { useContext, useReducer, useState } from "react";
-import {
-    CssBaseline,
-    Container,
-    Box,
-    Button,
- 
-} from "@mui/material";
-import EmailInput from "./EmailInput";
-import PasswordInput from "./PasswordInput";
+import { useReducer, useState } from "react";
+import { Box, Menu, MenuItem, Avatar, IconButton, CssBaseline, Container, Button } from "@mui/material";
 import RegistrationForm from "./RegistrationForm";
-import HomePage from "./HomePage";
+import EditForm from "./EditForm";
 import userReducer, { UserContext, UserType, StageContext, StageType } from "./userReducer";
-import LoginIcon from "@mui/icons-material/Login";
-
+import Profile from "./Profile";
+import MenuIcon from '@mui/icons-material/Menu';
+import NavBar from "./NavBar";
 const AppUser = () => {
     const initialState: UserType = null;
     const [user, userDispatch] = useReducer(userReducer, initialState);
+    const [stage, setStage] = useState<StageType>("navigation");
 
-    // Use state for stage management
-    const [stage, setStage] = useState<StageType>("login");
-    const [email, setEmail] = useState("");
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+    const handleMenuClose = () => setAnchorEl(null);
 
-    // Handle email submission
-    const handleEmailSubmit = (email: string) => {
-        setEmail(email);
-        if(user?.email!==email) {
-            userDispatch({type:"REMOVE_USER"});
-            setStage("register")
-        }
-        else setStage("password");
-    };
-
-    // Handle password submission
-    const handlePasswordSubmit = (password: string) => {
-        if (user?.password === password) {
-            userDispatch({ type: "LOGIN", data: user });
-            setStage("home");
-        } else {
-            alert("Invalid password");
-        }
-    };
 
     return (
         <UserContext.Provider value={{ user, userDispatch }}>
             <StageContext.Provider value={{ stage, setStage }}>
                 <CssBaseline />
+
                 <Container>
+                    {stage === "navigation" && (
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "10vh" }}>
 
-                    {stage === "login" && (
-                        <Box
-                            sx={{
-                                position: "absolute",
-                                top: 20,
-                                left: 20,
-                            }}
-                        >
-                            <Button
-                                variant="contained"
-                                color="primary"
+                            <IconButton
+                                onClick={handleMenuOpen}
                                 size="large"
-                                onClick={() => setStage("email")}
-                                endIcon={<LoginIcon />}
-                                sx={{
-                                    py: 1.5,
-                                    textTransform: "none",
-                                    fontSize: "1.1rem",
-                                }}
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                sx={{ mr: 2 }}
                             >
-                                Login
-                            </Button>
+                                <MenuIcon fontSize="large" />
+                            </IconButton>
+                            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose} sx={{ mt: 1 }}>
+
+                                <MenuItem onClick={() => { setStage("login"); handleMenuClose(); }}>Login</MenuItem>
+                                <MenuItem onClick={() => { setStage("register"); handleMenuClose(); }}>Register</MenuItem>
+
+
+                            </Menu>
                         </Box>
                     )}
 
-                    { stage === "home" && <HomePage />}
-
-                    {stage === "email" && (
-                        <Box mt={3}>
-                            <EmailInput onSubmit={handleEmailSubmit} />
-                        </Box>
-                    )}
-
-                    {stage === "password" && (
-                        <Box mt={3}>
-                            <PasswordInput onSubmit={handlePasswordSubmit} />
-                        </Box>
-                    )}
-
-                    {stage === "register" && (
-                        <Box mt={3}>
-                            <RegistrationForm email={email} />
-                        </Box>
-                    )}
-
-                    {stage === "edit" && (
-                        <Box mt={3}>
-                            <RegistrationForm email={email} />
-                        </Box>
-                    )}
-
+                    {stage === "home" && <Profile />}
+                    {stage === "login" && <RegistrationForm />}
+                    {stage === "register" && <RegistrationForm />}
+                    {stage === "edit" && <EditForm />}
                 </Container>
             </StageContext.Provider>
         </UserContext.Provider>

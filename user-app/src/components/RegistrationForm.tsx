@@ -1,41 +1,68 @@
 import React, { useContext, useState } from "react";
-import { TextField, Button, Typography, Box, IconButton, Grow } from "@mui/material";
+import { TextField, Button, Typography, Box, IconButton, Grow, Alert } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { UserContext, StageContext } from "./userReducer";
+import axios from "axios";
+import { StageContext, UserContext } from "./userReducer";
 
-export const RegistrationForm = ({ email }: { email: string }) => {
-    const { user , userDispatch } = useContext(UserContext);
-    const { stage, setStage } = useContext(StageContext);
-    const isEditMode = stage === 'edit';
-    const [formData, setFormData] = useState({
-        firstName: user?.firstName || "",
-        lastName: user?.lastName || "",
-        email: email || "",
-        address: user?.address || "",
-        password: user?.password || "",
-        phone: user?.phone || "",
+export const RegistrationForm = () => {
+  const { stage, setStage } = useContext(StageContext);
+  const { user, userDispatch } = useContext(UserContext);
 
-    });
+  const titles = stage === 'login' ? { header: 'Login', submit: 'Login' } : { header: 'Create Your Account', submit: 'Register' }
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
-  const titles = isEditMode
-  ? { header: "Edit Your Account", submit: "Keep Changes" } :
-  { header: "Create Your Account", submit: "Register" };
-
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const actionType = isEditMode ? "EDIT" : "REGISTER";
-    userDispatch({
-        type: actionType,
-        data: { ...formData },
-    });
-    setStage('home')
+ 
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("http://localhost:3000/api/user/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+      const signedUser =await response.data.user;
+      
+       userDispatch({ type: "LOGIN", data: signedUser });
+
+      setSuccess("Login successful! Welcome back, User ID: " + signedUser.id);
+      setStage("home");
+    } catch (e: any) {
+      setError("Login failed. Please check your credentials and try again.");
+    }
   };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(null);
+  
+    try {
+      const response = await axios.post("http://localhost:3000/api/user/register", {
+        email: formData.email,
+        password: formData.password,
+      });
+      const updatedUser = response.data;
+      userDispatch({ type: "REGISTER", data: updatedUser });
+      setSuccess("Registration successful! Your User ID is: " + updatedUser.id);
+      setStage("home");
+    } catch (e: any) {
+      if (e.response?.status === 422) {
+        handleLogin();
+      } else {
+        setError("An error occurred during registration. Please try again.");
+      }
+    }
+  };
+  
 
   return (
     <Grow in>
@@ -53,22 +80,21 @@ export const RegistrationForm = ({ email }: { email: string }) => {
         }}
       >
         <Typography variant="h5" gutterBottom>
-        {titles.header}
+          {titles.header}
         </Typography>
+
         <form onSubmit={handleSubmit}>
-          {["firstName", "lastName", "address", "phone"].map((field) => (
-            <TextField
-              key={field}
-              label={field.replace(/^\w/, (c) => c.toUpperCase())}
-              name={field}
-              value={formData[field as keyof typeof formData]}
-              onChange={handleChange}
-              fullWidth
-              required
-              margin="normal"
-              variant="outlined"
-            />
-          ))}
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+            variant="outlined"
+          />
           <TextField
             label="Password"
             name="password"
@@ -87,6 +113,8 @@ export const RegistrationForm = ({ email }: { email: string }) => {
               ),
             }}
           />
+          {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+          {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
           <Button
             type="submit"
             fullWidth
@@ -101,11 +129,12 @@ export const RegistrationForm = ({ email }: { email: string }) => {
               "&:hover": { boxShadow: 6, bgcolor: "primary.dark" },
             }}
           >
-             {titles.submit}
+            {titles.submit}
           </Button>
         </form>
       </Box>
     </Grow>
   );
 };
-export default RegistrationForm
+
+export default RegistrationForm;

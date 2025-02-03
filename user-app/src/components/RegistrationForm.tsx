@@ -5,6 +5,7 @@ import axios from "axios";
 import { StageContext, UserContext } from "./userReducer";
 
 export const RegistrationForm = () => {
+  const url = "http://localhost:3000/";  
   const { stage, setStage } = useContext(StageContext);
   const { user, userDispatch } = useContext(UserContext);
 
@@ -25,7 +26,7 @@ export const RegistrationForm = () => {
  
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/user/login", {
+      const response = await axios.post(`${url}api/user/login`, {
         email: formData.email,
         password: formData.password,
       });
@@ -46,7 +47,7 @@ export const RegistrationForm = () => {
     setSuccess(null);
   
     try {
-      const response = await axios.post("http://localhost:3000/api/user/register", {
+      const response = await axios.post(`${url}api/user/register`, {
         email: formData.email,
         password: formData.password,
       });

@@ -20,7 +20,7 @@ export const addRecipe = createAsyncThunk("recipes/add", async (recipe: RecipeTy
       instructions: recipe.instructions,
       authorId: recipe.authorId,
   }, {
-      headers: { "user-id": recipe.authorId.toString() }, // Add proper user-id header for authenticated users
+      headers: { "user-id": recipe.authorId }, 
     });
     return response.data.recipe; // Assuming the API returns the created recipe
   } catch (e: any) {

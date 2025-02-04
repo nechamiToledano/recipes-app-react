@@ -30,7 +30,7 @@ const EditForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !user.userId) {
+    if (!user || !user.id) {
       <Alert>"User ID is missing. Please log in again."</Alert>
       return;
     }
@@ -39,7 +39,7 @@ const EditForm = () => {
       const response = await axios.put(
         "http://localhost:3000/api/user",
         formData,
-        { headers: { "user-id": user.userId } } // Ensure user.id is valid
+        { headers: { "user-id": user.id } } 
       );
       const updatedUser = response.data;
       userDispatch({ type: "EDIT", data: updatedUser });

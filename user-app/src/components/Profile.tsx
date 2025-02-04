@@ -39,11 +39,11 @@ const Profile = () => {
           aria-expanded={openMenu ? "true" : undefined}
         >
           <Avatar
+          
             sx={{
+              bgcolor:'lightblue',
               width: 55,
-              height: 55,
-              bgcolor: "success",
-              color: "white",
+              height: 55, 
               fontSize: 23,
             }}
           >

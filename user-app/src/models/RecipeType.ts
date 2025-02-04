@@ -7,6 +7,5 @@ export type RecipeType = {
     authorId: number,
     ingredients: string[];
     instructions: string;
-    image?: string;
 }
 

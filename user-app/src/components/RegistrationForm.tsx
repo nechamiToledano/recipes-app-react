@@ -26,9 +26,10 @@ const RegistrationForm = () => {
         : await axios.post("http://localhost:3000/api/user/register", formData);
         
       const signedUser = response.data.user;
-      console.log(signedUser);
       
       userDispatch({ type: stage === "login" ? "LOGIN" : "REGISTER", data: signedUser });
+      console.log(user);
+
       setMessage({ type: "success", text: `${stage === "login" ? "Login" : "Registration"} successful!` });
       setStage("home");
     } catch (error) {

@@ -21,7 +21,7 @@ export const StageContext = createContext<{
 
 
 export type UserType = {
-  userId: string;
+  id: number;
   email?: string;
   password?: string;
   firstName?: string;
@@ -37,13 +37,13 @@ type Action =
   | { type: "LOGOUT" }
   | { type: "REMOVE_USER" };
 
-export const userReducer = (state: Partial<UserType>, action: Action): Partial<UserType>|null => {
+export const userReducer = (state:UserType, action: Action) => {
   switch (action.type) {
     case "LOGIN":
     case "REGISTER":
       return { ...action.data ,
         firstName: action.data?.firstName || "User",
-        userId: action.data?.userId || "",        
+        id: action.data?.id || "",        
       }; 
     case "EDIT":
       return state ? { ...state, ...action.data } : state;

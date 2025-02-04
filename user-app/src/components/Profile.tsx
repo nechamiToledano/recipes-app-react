@@ -42,7 +42,7 @@ const Profile = () => {
             sx={{
               width: 55,
               height: 55,
-              bgcolor: "lightblue",
+              bgcolor: "success",
               color: "white",
               fontSize: 23,
             }}

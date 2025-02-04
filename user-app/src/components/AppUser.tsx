@@ -1,14 +1,12 @@
-import { useReducer, useState } from "react";
-import { Box, Menu, MenuItem, Avatar, IconButton, CssBaseline, Container, Button } from "@mui/material";
+import {  useState } from "react";
+import { Box, Menu, MenuItem, Avatar, IconButton, CssBaseline, Container, Button, colors } from "@mui/material";
 import RegistrationForm from "./RegistrationForm";
 import EditForm from "./EditForm";
-import userReducer, { UserContext, UserType, StageContext, StageType } from "./userReducer";
+import {  StageContext, StageType } from "./userReducer";
 import Profile from "./Profile";
-import MenuIcon from '@mui/icons-material/Menu';
-import NavBar from "./NavBar";
+
 const AppUser = () => {
-    const initialState: UserType = null;
-    const [user, userDispatch] = useReducer(userReducer, initialState);
+  
     const [stage, setStage] = useState<StageType>("navigation");
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -17,7 +15,6 @@ const AppUser = () => {
 
 
     return (
-        <UserContext.Provider value={{ user, userDispatch }}>
             <StageContext.Provider value={{ stage, setStage }}>
                 <CssBaseline />
 
@@ -29,11 +26,12 @@ const AppUser = () => {
                                 onClick={handleMenuOpen}
                                 size="large"
                                 edge="start"
-                                color="inherit"
+                                color="success"
                                 aria-label="menu"
                                 sx={{ mr: 2 }}
                             >
-                                <MenuIcon fontSize="large" />
+                            <Avatar sx={{ bgcolor:'green'}}></Avatar>
+                              
                             </IconButton>
                             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose} sx={{ mt: 1 }}>
 
@@ -51,7 +49,6 @@ const AppUser = () => {
                     {stage === "edit" && <EditForm />}
                 </Container>
             </StageContext.Provider>
-        </UserContext.Provider>
     );
 };
 

@@ -21,14 +21,14 @@ export const StageContext = createContext<{
 
 
 export type UserType = {
-  id?: string;
+  userId: string;
   email?: string;
   password?: string;
   firstName?: string;
   lastName?: string;
   address?: string;
   phone?: string;
-} |null;
+} | null; 
 
 type Action =
   | { type: "LOGIN"; data: UserType } // Password not needed in context
@@ -43,8 +43,8 @@ export const userReducer = (state: Partial<UserType>, action: Action): Partial<U
     case "REGISTER":
       return { ...action.data ,
         firstName: action.data?.firstName || "User",
-        lastName: action.data?.lastName || "",
-      }; // Populate all provided fields
+        userId: action.data?.userId || "",        
+      }; 
     case "EDIT":
       return state ? { ...state, ...action.data } : state;
     case "LOGOUT":

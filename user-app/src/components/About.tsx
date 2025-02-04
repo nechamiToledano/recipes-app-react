@@ -3,7 +3,7 @@ import { Container, Typography, Card, CardContent } from "@mui/material";
 const About= () => {
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Card sx={{ p: 3, boxShadow: 3 }}>
+<Card sx={{ p: 10, boxShadow: 3 ,backgroundImage: `url('bg.jpg')`  ,    backgroundSize: 'cover'}}>
         <CardContent>
           <Typography variant="h4" gutterBottom>
             About Us

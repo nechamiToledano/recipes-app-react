@@ -4,15 +4,17 @@
     "@emotion/styled": "^11.14.0",
     "@hookform/resolvers": "^3.10.0",
     "@mui/icons-material": "^6.2.1",
-    "@mui/material": "^6.2.1",
+    "@mui/material": "^6.4.2",
     "@reduxjs/toolkit": "^2.5.1",
+    "@types/react": "19.0.0",
+    "@types/react-dom": "19.0.0",
     "axios": "^1.7.9",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "react-hook-form": "^7.54.2",
     "react-redux": "^9.2.0",
     "react-router": "^7.1.1",
-    "react-router-dom": "^7.1.1",
+    "react-router-dom": "^7.1.5",
     "yup": "^1.6.1"
   }
 }

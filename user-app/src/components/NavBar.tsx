@@ -4,7 +4,7 @@ import AppUser from "./AppUser";
 
 const NavBar = () => {
   return (
-    <AppBar  sx={{ backgroundColor: 'lightblue' }}>
+    <AppBar  sx={{ backgroundColor:'mintcream' }}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         {/* Left: AppUser Menu */}
         <Box position={"fixed"} left={5} top={2}>
@@ -16,7 +16,7 @@ const NavBar = () => {
           <Button
             component={NavLink as any}
             to="/"
-            color="inherit"
+            color="success"
             sx={{ textTransform: "none", mx: 1 }}
           >
             Home
@@ -24,10 +24,18 @@ const NavBar = () => {
           <Button
             component={NavLink as any}
             to="/about"
-            color="inherit"
+            color="success"
             sx={{ textTransform: "none", mx: 1 }}
           >
             About
+          </Button>
+          <Button
+            component={NavLink as any}
+            to="/recipes"
+            color="success"
+            sx={{ textTransform: "none", mx: 1 }}
+          >
+            Recipes
           </Button>
         </Box>
       </Toolbar>

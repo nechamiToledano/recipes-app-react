@@ -57,7 +57,7 @@ const RegistrationForm = () => {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            color="success"
             sx={{ mt: 2, py: 1.5, fontWeight: "bold", textTransform: "none", boxShadow: 3 }}
           >
             {titles.submit}

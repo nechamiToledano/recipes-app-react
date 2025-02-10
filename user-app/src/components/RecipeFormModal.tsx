@@ -1,7 +1,4 @@
-import {  
-  Dialog, DialogTitle, DialogContent, TextField,  
-  DialogActions, Button, Typography, IconButton  
-} from "@mui/material";  
+import {   Dialog, DialogTitle, DialogContent, TextField,  DialogActions, Button, Typography, IconButton  } from "@mui/material";  
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";  
 import { yupResolver } from "@hookform/resolvers/yup";  
 import * as yup from "yup";  
@@ -77,23 +74,15 @@ const RecipeFormModal = ({
                 helperText={errors.ingredients?.[index]?.message}  
                 fullWidth  
               />  
-              <IconButton onClick={() => remove(index)} color="error">  
-                <Remove />  
-              </IconButton>  
+              <IconButton onClick={() => remove(index)} color="error">     <Remove />   </IconButton>  
             </div>  
           ))}    
 
-          <Button onClick={() => append("")} variant="outlined" color="primary" startIcon={<Add />}>  
-            הוסף מרכיב  
-          </Button>    
+          <Button onClick={() => append("")} variant="outlined" color="primary" startIcon={<Add />}>    הוסף מרכיב   </Button>    
 
           <DialogActions>  
-            <Button type="submit" variant="contained" color="success" startIcon={<CheckCircle />}>  
-              שמור  
-            </Button>  
-            <Button onClick={onClose} variant='contained' color="error" startIcon={<Cancel />}>  
-              ביטול  
-            </Button>  
+            <Button type="submit" variant="contained" color="success" startIcon={<CheckCircle />}>   שמור   </Button>  
+            <Button onClick={onClose} variant='contained' color="error" startIcon={<Cancel />}>   ביטול  </Button>  
           </DialogActions>  
         </form>  
       </DialogContent>  

@@ -11,14 +11,14 @@ import UserReducer from "./components/userReducer";
 
 
 function App() {
-  const initialState: UserType | null = null;
+  const initialState: UserType  = null;
   const [user, userDispatch] = useReducer(UserReducer, initialState);
 
   return (
     <Provider store={store}>
-      <UserContext.Provider value={{ user, userDispatch }}>
+      <UserContext value={{ user, userDispatch }}>
         <RouterProvider router={router} />
-      </UserContext.Provider>
+      </UserContext>
     </Provider>
   );
 }

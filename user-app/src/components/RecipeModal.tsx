@@ -14,11 +14,12 @@ const RecipeModal = ({ recipe, onClose }: RecipeModalProps) => (
           {recipe.title}
         </DialogTitle>
         <DialogContent sx={{ p: 3 }}>
-          {recipe.image && (
+          { (
             <CardMedia
               component="img"
               height="300"
-              image={recipe.image}
+         image={'food.png'}
+            
               alt={recipe.title}
               sx={{
                 objectFit: "cover",

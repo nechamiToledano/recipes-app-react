@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import  { useState, useContext } from "react";
 import {
   Box,
   Button,
@@ -11,9 +11,22 @@ import {
 import { StageContext, UserContext } from "./userReducer";
 import axios from "axios";
 
+const FormField = ({ label, name, value, onChange }:{label:any,name:string,value:any,onChange:any}) => (
+  <Grid item xs={12}>
+    <TextField fullWidth label={label} name={name} value={value} onChange={onChange} variant="outlined" />
+  </Grid>
+);
+
+const FormFields = ({ formData, handleInputChange }:{formData:any,handleInputChange:any}) => (
+  <Grid container spacing={2}>
+    {Object.keys(formData).map((key) => (
+      <FormField key={key} label={key.charAt(0).toUpperCase() + key.slice(1)} name={key} value={formData[key]} onChange={handleInputChange} />
+    ))}
+  </Grid>
+);
+
 const EditForm = () => {
-      const { stage, setStage } = useContext(StageContext);
-    
+  const { stage, setStage } = useContext(StageContext);
   const { user, userDispatch } = useContext(UserContext);
   const [formData, setFormData] = useState({
     firstName: user?.firstName || "",
@@ -23,127 +36,35 @@ const EditForm = () => {
     phone: user?.phone || "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e:any) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     if (!user || !user.id) {
-      <Alert>"User ID is missing. Please log in again."</Alert>
-      return;
+      return <Alert severity="error">User ID is missing. Please log in again.</Alert>;
     }
-  
     try {
-      const response = await axios.put(
-        "http://localhost:3000/api/user",
-        formData,
-        { headers: { "user-id": user.id } } 
-      );
-      const updatedUser = response.data;
-      userDispatch({ type: "EDIT", data: updatedUser });
-      <Alert>Profile updated successfully!</Alert>
+      const response = await axios.put("http://localhost:3000/api/user", formData, {
+        headers: { "user-id": user.id },
+      });
+      userDispatch({ type: "EDIT", data: response.data });
       setStage("home");
     } catch (error) {
-      <Alert>An error occurred while updating your profile.</Alert>
+      return <Alert severity="error">An error occurred while updating your profile.</Alert>;
     }
   };
-  
-
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        backgroundColor: "#f4f4f4",
-        padding: 2,
-      }}
-    >
-      <Paper
-        elevation={3}
-        sx={{
-          width: "100%",
-          maxWidth: 500,
-          padding: 3,
-          borderRadius: 2,
-        }}
-      >
-        <Typography variant="h5" fontWeight="600" marginBottom={2}>
-          Edit Profile
-        </Typography>
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", backgroundColor: "#f4f4f4", padding: 2 }}>
+      <Paper elevation={3} sx={{ width: "100%", maxWidth: 500, padding: 3, borderRadius: 2 }}>
+        <Typography variant="h5" fontWeight="600" marginBottom={2}>Edit Profile</Typography>
         <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="First Name"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Last Name"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Address"
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                variant="outlined"
-              />
-            </Grid>
-          </Grid>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: 3,
-            }}
-          >
-            <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              sx={{ width: "48%" }}
-            >
-              Save
-            </Button>
- 
+          <FormFields formData={formData} handleInputChange={handleInputChange} />
+          <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 3 }}>
+            <Button type="submit" variant="contained" color="success" sx={{ width: "48%" }}>Save</Button>
           </Box>
         </form>
       </Paper>

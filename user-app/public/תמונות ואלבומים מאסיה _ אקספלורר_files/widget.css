@@ -1,0 +1,129 @@
+body {
+}
+html {
+    background-color: #fff;
+}
+
+/*old loader*/
+#loader-container {
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+}
+
+
+.lds-ring.initial {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+
+    .lds-ring.initial div {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        margin: 6px;
+        border: 4px solid;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #e6e5e5 transparent transparent transparent;
+    }
+
+        .lds-ring.initial div:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+
+        .lds-ring.initial div:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+
+        .lds-ring.initial div:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+/*new loader*/
+#drop-loader {
+    z-index: 6;
+    height: 200px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    /*    overflow: hidden; */
+    /*    overflow-x: hidden;*/
+    /* IE 11 FIX*/
+    -ms-overflow-y: hidden;
+    -ms-overflow-x: hidden;
+    -ms-animation: 1s linear loader-contbackgroundainer;
+    -moz-animation: 1s linear loader-background;
+    -webkit-animation: 1s linear loader-background;
+    animation: 1s linear loader-background;
+    /*animation-delay: 0.5s;*/
+}
+
+    #drop-loader svg {
+        height: auto !important;
+        position: absolute;
+        bottom: -46px;
+        left: 0;
+        right: 0;
+        -ms-transform: translate3d(0px, 0px, 0px);
+        opacity: 0;
+    }
+
+
+@keyframes loader-background {
+    /*  0%   {height: 0px; opacity: 0}
+  10%   {height: 0px;}
+  20%   {height: 0px;}
+  30%   {height: 0px;}
+  40%   {height: 0px;}
+  50%   {height: 0px;}
+  60%   {height: 50px; opacity: 0.25}
+  70%  {height: 100px; opacity: 0.5}
+  80%  {height: 150px;}
+  90%  {height: 200px; opacity: 1}
+  100% {height: 200px;}*/
+    0% {
+        opacity: 0
+    }
+
+    25% {
+        opacity: 0.25
+    }
+
+    50% {
+        opacity: 0.5
+    }
+
+    75% {
+        opacity: 0.75
+    }
+
+    100% {
+        opacity: 1
+    }
+}

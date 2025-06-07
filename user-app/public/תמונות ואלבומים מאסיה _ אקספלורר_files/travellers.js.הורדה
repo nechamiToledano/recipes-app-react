@@ -1,0 +1,276 @@
+﻿function PerformFlightsSearch(token) {
+    NavigateToUrlNew("/flights/search?token=" + token);
+}
+
+function NavigateToUrl(url) {
+    window.location.href = url;
+}
+
+function NavigateToUrlNew(url) {
+    window.open(url, '_blank');
+}
+
+function GoToArticle(url) {
+    window.open(url, "_blank");
+}
+
+$(document).ready(function () {
+    var owl = $('.owl-carousel');
+    owl.owlCarousel({
+        rtl: true,
+        margin: 0,
+        nav: true,
+        loop: false,
+        items: 2,
+        dotsEach: 2,
+        mouseDrag: true,
+        touchDrag: true,
+        autoWidth: true,
+        dots: true
+    });
+
+    Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(RefreshDealsAndAsyncPostback);
+});
+
+function RefreshDealsAndAsyncPostback() {
+    $(document).ready(function () {
+        setTimeout(function () { ReloadDealsSlider(); }, 500);
+    });
+}
+
+function ReloadDealsSlider() {
+    var owl = $('.owl-carousel');
+    owl.owlCarousel({
+        rtl: true,
+        margin: 0,
+        nav: true,
+        loop: false,
+        items: 2,
+        dotsEach: 2,
+        mouseDrag: true,
+        touchDrag: true,
+        autoWidth: true,
+        dots: true
+    });
+
+    owl.owlCarousel({
+        rtl: true,
+        margin: 0,
+        nav: true,
+        loop: false,
+        items: 2,
+        dotsEach: 2,
+        mouseDrag: true,
+        touchDrag: true,
+        autoWidth: true,
+        dots: true
+    });
+
+    $(".group_loader").css("display", "none");
+}
+
+function ShowDealsLoader() {
+    document.getElementById("dealsContainer").style.display = "none";
+    document.getElementById("dealsLoaderDiv").style.display = "block";
+}
+
+function ShowAddCommentLoader() {
+    document.getElementById("addComment").style.display = "none";
+    document.getElementById("addCommentLoading").style.display = "block";
+    document.getElementById("btnAddComment").click();
+}
+
+function ShowEditCommentLoader() {
+    document.getElementById("edit_comment_div").style.display = "none";
+    document.getElementById("loading_edit_comment_div").style.display = "block";
+    editCommentPopup.Show();
+}
+
+function ShowSaveCommentLoader() {
+    document.getElementById("edit_comment_div").style.display = "none";
+    document.getElementById("loading_edit_comment_div").style.display = "block";
+}
+
+function HideEditCommentPopup() {
+    editCommentPopup.Hide();
+    document.documentElement.style.overflowY = "auto";
+}
+
+function HideScroll() {
+    document.documentElement.style.overflowY = "hidden";
+}
+
+function ShowScroll() {
+    document.documentElement.style.overflowY = "auto";
+}
+
+function ShareFacebook() {
+    var link = document.getElementById("shareUrl").value;
+    document.getElementById("shareDiv").style.display = "none";
+    document.getElementById("shareLoadingDiv").style.display = "block";
+
+    $.ajax({
+        url: '/WebServices/system/GoLinkHandler.ashx?link=' + link,
+        type: "GET",
+        dataType: "text",
+        success: function (data) {
+            var full_url = "https://www.facebook.com/sharer/sharer.php?u=" + data;
+            window.open(full_url, '_blank');
+            document.getElementById("shareDiv").style.display = "block";
+            document.getElementById("shareLoadingDiv").style.display = "none";
+        },
+        error: function (data) {
+        }
+    });
+}
+
+function ShareWhatsapp() {
+    var link = document.getElementById("shareUrl").value;
+    var title = document.getElementById("shareTitle").value;
+    document.getElementById("shareDiv").style.display = "none";
+    document.getElementById("shareLoadingDiv").style.display = "block";
+
+    $.ajax({
+        url: '/WebServices/system/GoLinkHandler.ashx?link=' + link,
+        type: "GET",
+        dataType: "text",
+        success: function (data) {
+            var full_url = "https://api.whatsapp.com/send?phone=&text=" + title + ": " + data;
+            window.open(full_url, '_blank');
+            document.getElementById("shareDiv").style.display = "block";
+            document.getElementById("shareLoadingDiv").style.display = "none";
+        },
+        error: function (data) {
+        }
+    });
+}
+
+function ShareEmail() {
+    var link = document.getElementById("shareUrl").value;
+    var title = document.getElementById("shareTitle").value;
+    document.getElementById("shareDiv").style.display = "none";
+    document.getElementById("shareLoadingDiv").style.display = "block";
+
+    $.ajax({
+        url: '/WebServices/system/GoLinkHandler.ashx?link=' + link,
+        type: "GET",
+        dataType: "text",
+        success: function (data) {
+            var full_url = "mailto:?subject=" + title + "&body=" + data;
+            window.open(full_url, '_blank');
+            document.getElementById("shareDiv").style.display = "block";
+            document.getElementById("shareLoadingDiv").style.display = "none";
+        },
+        error: function (data) {
+        }
+    });
+}
+
+function ShareFacebookCrumb() {
+    var link = document.getElementById("shareUrl").value;
+    document.getElementById("shareCrumbDiv").style.display = "none";
+    document.getElementById("shareLoadingCrumbDiv").style.display = "block";
+
+    $.ajax({
+        url: '/WebServices/system/GoLinkHandler.ashx?link=' + link,
+        type: "GET",
+        dataType: "text",
+        success: function (data) {
+            var full_url = "https://www.facebook.com/sharer/sharer.php?u=" + data;
+            window.open(full_url, '_blank');
+            document.getElementById("shareCrumbDiv").style.display = "block";
+            document.getElementById("shareLoadingCrumbDiv").style.display = "none";
+        },
+        error: function (data) {
+        }
+    });
+}
+
+function ShareWhatsappCrumb() {
+    var link = document.getElementById("shareUrl").value;
+    var title = document.getElementById("shareTitle").value;
+    document.getElementById("shareCrumbDiv").style.display = "none";
+    document.getElementById("shareLoadingCrumbDiv").style.display = "block";
+
+    $.ajax({
+        url: '/WebServices/system/GoLinkHandler.ashx?link=' + link,
+        type: "GET",
+        dataType: "text",
+        success: function (data) {
+            var full_url = "https://api.whatsapp.com/send?phone=&text=" + title + ": " + data;
+            window.open(full_url, '_blank');
+            document.getElementById("shareCrumbDiv").style.display = "block";
+            document.getElementById("shareLoadingCrumbDiv").style.display = "none";
+        },
+        error: function (data) {
+        }
+    });
+}
+
+function ShareEmailCrumb() {
+    var link = document.getElementById("shareUrl").value;
+    var title = document.getElementById("shareTitle").value;
+    document.getElementById("shareCrumbDiv").style.display = "none";
+    document.getElementById("shareLoadingCrumbDiv").style.display = "block";
+
+    $.ajax({
+        url: '/WebServices/system/GoLinkHandler.ashx?link=' + link,
+        type: "GET",
+        dataType: "text",
+        success: function (data) {
+            var full_url = "mailto:?subject=" + title + "&body=" + data;
+            window.open(full_url, '_blank');
+            document.getElementById("shareCrumbDiv").style.display = "block";
+            document.getElementById("shareLoadingCrumbDiv").style.display = "none";
+        },
+        error: function (data) {
+        }
+    });
+}
+
+
+function SelectContentTab(tab) {
+    try {
+        document.getElementById("articlesTab").className = "tab_panel";
+        document.getElementById("articlesContentPanel").style.display = "none";
+    }
+    catch (e) {
+    }
+
+    try {
+        document.getElementById("tipsTab").className = "tab_panel";
+        document.getElementById("tipsContentPanel").style.display = "none";
+    }
+    catch (e) {
+    }
+
+    try {
+        document.getElementById("questionsTab").className = "tab_panel";
+        document.getElementById("questionsContentPanel").style.display = "none";
+    }
+    catch (e) {
+    }
+
+    switch (tab) {
+        case 1:
+            {
+                document.getElementById("articlesTab").className = "tab_panel_selected";
+                document.getElementById("articlesContentPanel").style.display = "block";
+                break;
+            }
+        case 2:
+            {
+                document.getElementById("tipsTab").className = "tab_panel_selected";
+                document.getElementById("tipsContentPanel").style.display = "block";
+                break;
+            }
+        case 3:
+            {
+                document.getElementById("questionsTab").className = "tab_panel_selected";
+                document.getElementById("questionsContentPanel").style.display = "block";
+                break;
+            }
+    }
+}
+
+

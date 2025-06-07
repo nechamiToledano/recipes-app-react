@@ -1,0 +1,237 @@
+﻿$(document).ready(function () {
+    CheckAccessibilitySettings();
+});
+
+function ShowAccessibilityPopup()
+{
+    AccessibilityPopup.Show();
+}
+
+function HideAccessibilityPopup() {
+    AccessibilityPopup.Hide();
+}
+
+function ChangeSiteFontSize(font_size)
+{
+    var imgFontSize1 = document.getElementById("btnFontSize1");
+    var imgFontSize2 = document.getElementById("btnFontSize2");
+    var imgFontSize3 = document.getElementById("btnFontSize3");
+    var imgFontSize4 = document.getElementById("btnFontSize4");
+    var accessibilityFontSize = document.getElementById("accessibilityFontSize");
+
+    btnFontSize1.src = '/img/global/btnFontSize1.jpg';
+    btnFontSize2.src = '/img/global/btnFontSize2.jpg';
+    btnFontSize3.src = '/img/global/btnFontSize3.jpg';
+    btnFontSize4.src = '/img/global/btnFontSize4.jpg';
+
+    switch(font_size)
+    {
+        case 1:
+            {
+                accessibilityFontSize.value = '1';
+                btnFontSize1.src = '/img/global/btnFontSize1Selected.jpg';
+                let css = '* {font-size: 13px !important;' + '}';
+                let head = $('head')[0];
+                let style = document.createElement('style');
+                let fontStyle = $('#site_font_size')[0];
+
+                if (fontStyle) {
+                    head.removeChild(fontStyle);
+                }
+                   
+                break;
+            }
+        case 2:
+            {
+                accessibilityFontSize.value = '2';
+                btnFontSize2.src = '/img/global/btnFontSize2Selected.jpg';
+                let css = '* {font-size: 16px !important;' + '}';
+                let head = $('head')[0];
+                let style = document.createElement('style');
+                let fontStyle = $('#site_font_size')[0];
+
+                if (fontStyle) {
+                    head.removeChild(fontStyle);
+                }
+                    
+                style.type = 'text/css';
+                style.id = 'site_font_size';
+                if (style.styleSheet) {
+                    style.styleSheet.cssText = css;
+                } else {
+                    style.appendChild(document.createTextNode(css));
+                }
+
+                //injecting the css to the head
+                head.appendChild(style);
+
+                break;
+            }
+        case 3:
+            {
+                accessibilityFontSize.value = '3';
+                btnFontSize3.src = '/img/global/btnFontSize3Selected.jpg';
+                let css = '* {font-size: 18px !important;' + '}';
+                let head = $('head')[0];
+                let style = document.createElement('style');
+                let fontStyle = $('#site_font_size')[0];
+
+                if (fontStyle) {
+                    head.removeChild(fontStyle);
+                }
+                    
+                style.type = 'text/css';
+                style.id = 'site_font_size';
+                if (style.styleSheet) {
+                    style.styleSheet.cssText = css;
+                } else {
+                    style.appendChild(document.createTextNode(css));
+                }
+
+                //injecting the css to the head
+                head.appendChild(style);
+
+                break;
+            }
+        case 4:
+            {
+                accessibilityFontSize.value = '4';
+                btnFontSize4.src = '/img/global/btnFontSize4Selected.jpg';
+                let css = '* {font-size: 20px !important;' + '}';
+                let head = $('head')[0];
+                let style = document.createElement('style');
+                let fontStyle = $('#site_font_size')[0];
+
+                if (fontStyle) {
+                    head.removeChild(fontStyle);
+                }
+                    
+                style.type = 'text/css';
+                style.id = 'site_font_size';
+                if (style.styleSheet) {
+                    style.styleSheet.cssText = css;
+                } else {
+                    style.appendChild(document.createTextNode(css));
+                }
+
+                //injecting the css to the head
+                head.appendChild(style);
+
+                break;
+            }
+    }
+}
+
+
+function ChangeGrayscale() {
+    var accessibilityGrayscale = document.getElementById("accessibilityGrayscale");
+    var btnGrayscale = document.getElementById("btnGrayscale");
+    var accessibilityColorInvert = document.getElementById("accessibilityColorInvert");
+    var btnColorInvert = document.getElementById("btnColorInvert");
+    var grayscale_mode = parseInt(accessibilityGrayscale.value);
+    let head = $('head')[0];
+    let filterGrayscale = $('#filter_grayscale')[0];
+    let filterInvert = $('#filter_invert')[0];
+
+    if (grayscale_mode == 0) {
+        accessibilityGrayscale.value = "1";
+        btnGrayscale.src = "/img/global/btnGrayscaleSelected.jpg";
+
+        let css = 'html {-webkit-filter: grayscale(100%);' + 'filter: grayscale(100%); }';
+        let style = document.createElement('style');
+
+        style.type = 'text/css';
+        style.id = 'filter_grayscale';
+        if (style.styleSheet) {
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
+        }
+
+        //injecting the css to the head
+        head.appendChild(style);
+
+        accessibilityColorInvert.value = "0";
+        btnColorInvert.src = "/img/global/btnColorInvert.jpg";
+
+        if (filterInvert) {
+            head.removeChild(filterInvert);
+        }
+    }
+    else {
+        accessibilityGrayscale.value = "0";
+        btnGrayscale.src = "/img/global/btnGrayscale.jpg";
+
+        if (filterGrayscale) {
+            head.removeChild(filterGrayscale);
+        }
+    }
+}
+
+function ChangeColorInvert() {
+    var accessibilityColorInvert = document.getElementById("accessibilityColorInvert");
+    var btnColorInvert = document.getElementById("btnColorInvert");
+    var accessibilityGrayscale = document.getElementById("accessibilityGrayscale");
+    var btnGrayscale = document.getElementById("btnGrayscale");
+    var invert_mode = parseInt(accessibilityColorInvert.value);
+    let head = $('head')[0];
+    let filterInvert = $('#filter_invert')[0];
+    let filterGrayscale = $('#filter_grayscale')[0];
+
+    if (invert_mode == 0) {
+        accessibilityColorInvert.value = "1";
+        btnColorInvert.src = "/img/global/btnColorInvertSelected.jpg";
+
+        let css = 'html {-webkit-filter: invert(100%);' + '-moz-filter: invert(100%);' + '-o-filter: invert(100%);' + '-ms-filter: invert(100%); }';
+        let style = document.createElement('style');
+
+        style.type = 'text/css';
+        style.id = 'filter_invert';
+        if (style.styleSheet) {
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
+        }
+
+        //injecting the css to the head
+        head.appendChild(style);
+
+        accessibilityGrayscale.value = "0";
+        btnGrayscale.src = "/img/global/btnGrayscale.jpg";
+
+        if (filterGrayscale) {
+            head.removeChild(filterGrayscale);
+        }
+    }
+    else {
+        accessibilityColorInvert.value = "0";
+        btnColorInvert.src = "/img/global/btnColorInvert.jpg";
+
+        if (filterInvert) {
+            head.removeChild(filterInvert);
+        }
+    }
+}
+
+function CheckAccessibilitySettings() {
+    var accessibilityFontSize = document.getElementById("accessibilityFontSize");
+    var accessibilityGrayscale = document.getElementById("accessibilityGrayscale");
+    var accessibilityColorInvert = document.getElementById("accessibilityColorInvert");
+
+    var font_size = parseInt(accessibilityFontSize.value);
+    var grayscale_mode = parseInt(accessibilityGrayscale.value);
+    var invert_mode = parseInt(accessibilityColorInvert.value);
+
+    if (font_size > 1) {
+        ChangeSiteFontSize(font_size);
+    }
+
+    if (grayscale_mode > 0) {
+        accessibilityGrayscale.value = "0";
+        ChangeGrayscale();
+    }
+    else if (invert_mode > 0) {
+        accessibilityColorInvert.value = "0";
+        ChangeColorInvert();
+    }
+}

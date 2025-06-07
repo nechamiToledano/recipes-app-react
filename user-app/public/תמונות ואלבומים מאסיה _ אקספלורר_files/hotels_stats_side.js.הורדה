@@ -1,0 +1,138 @@
+﻿$(document).ready(function () {
+    var htLazy = new LazyLoad({
+        elements_selector: ".lazy_ht",
+        callback_error: lazyErrorHandler
+    });
+
+    try {
+        $('#hotels_dests_slider').on('mousewheel', '.owl-stage', function (e) {
+            if (e.deltaY > 0) {
+                $('#hotels_dests_slider').trigger('prev.owl');
+            } else {
+                $('#hotels_dests_slider').trigger('next.owl');
+            }
+            e.preventDefault();
+        });
+    }
+    catch (e) {
+    }
+
+    try {
+        $('#best_hotels_slider').on('mousewheel', '.owl-stage', function (e) {
+            if (e.deltaY > 0) {
+                $('#best_hotels_slider').trigger('prev.owl');
+            } else {
+                $('#best_hotels_slider').trigger('next.owl');
+            }
+            e.preventDefault();
+        });
+    }
+    catch (e) {
+    }
+});
+
+Sys.WebForms.PageRequestManager.getInstance().add_endRequest(endDealsViewerRequest);
+
+function endDealsViewerRequest() {
+    var htLazy = new LazyLoad({
+        elements_selector: ".lazy_ht",
+        callback_error: lazyErrorHandler
+    });
+
+    try {
+        $('#hotels_dests_slider').on('mousewheel', '.owl-stage', function (e) {
+            if (e.deltaY > 0) {
+                $('#hotels_dests_slider').trigger('prev.owl');
+            } else {
+                $('#hotels_dests_slider').trigger('next.owl');
+            }
+            e.preventDefault();
+        });
+    }
+    catch (e) {
+    }
+
+    try {
+        $('#best_hotels_slider').on('mousewheel', '.owl-stage', function (e) {
+            if (e.deltaY > 0) {
+                $('#best_hotels_slider').trigger('prev.owl');
+            } else {
+                $('#best_hotels_slider').trigger('next.owl');
+            }
+            e.preventDefault();
+        });
+    }
+    catch (e) {
+    }
+}
+
+function lazyErrorHandler(element) {
+    try {
+        element.className = "img_hotel_error";
+        element.style.backgroundImage = "url('/img/market/ht_no_image.jpg')";
+        var hotel_id = element.getAttribute('ht_id');
+        updateHotelRequired(hotel_id);
+    }
+    catch (e) {
+    }
+}
+
+function ShowNextImage(img_pnl, is_next) {
+    var image_panel = document.getElementById(img_pnl);
+    var imgError = document.getElementById("imgError");
+    var images = image_panel.getAttribute("images");
+    var index = parseInt(image_panel.getAttribute("index"));
+    var total = parseInt(image_panel.getAttribute("total"));
+    var images_arr = images.split(",");
+    var ht_id = parseInt(image_panel.getAttribute('ht_id'));
+    imgError.setAttribute("ht_id", ht_id);
+
+    if (is_next == 1) {
+        if (index < (total - 1)) {
+            image_panel.style.backgroundImage = "url('" + images_arr[index + 1] + "')";
+            image_panel.setAttribute("index", index + 1);
+            imgError.src = images_arr[index + 1];
+        }
+        else {
+            image_panel.style.backgroundImage = "url('" + images_arr[0] + "')";
+            image_panel.setAttribute("index", 0);
+            imgError.src = images_arr[0];
+        }
+    }
+    else {
+        if (index > 0) {
+            image_panel.style.backgroundImage = "url('" + images_arr[index - 1] + "')";
+            image_panel.setAttribute("index", index - 1);
+            imgError.src = images_arr[index - 1];
+        }
+        else {
+            image_panel.style.backgroundImage = "url('" + images_arr[total - 1] + "')";
+            image_panel.setAttribute("index", total - 1);
+            imgError.src = images_arr[total - 1];
+        }
+    }
+}
+
+var ht_update_count = 0;
+var ht_update_arr = [];
+
+function updateHotelRequired(ht_id) {
+    if (ht_update_arr.indexOf(ht_id) === -1 && ht_update_count < 10) {
+        ht_update_count = ht_update_count + 1;
+        ht_update_arr.push(ht_id);
+
+        $.ajax({
+            url: '/WebServices/Hotels/SetUpdateHotel.ashx?ht_id=' + ht_id,
+            type: "GET",
+            dataType: "text",
+            success: function (data) {
+            },
+            error: function (data) {
+            }
+        });
+    }
+}
+
+function updateHotelData(ht_id) {
+    updateHotelRequired(ht_id);
+}

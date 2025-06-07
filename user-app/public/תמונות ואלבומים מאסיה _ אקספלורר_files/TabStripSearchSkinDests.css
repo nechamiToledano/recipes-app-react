@@ -1,0 +1,149 @@
+.RadTabStrip_SearchSkin {
+  color: #3e3e3e;
+  font: 16px 'Arimo', "Segoe UI", Arial, Helvetica, sans-serif;
+  line-height: 29px;
+}
+  .RadTabStrip_SearchSkin .rtsGhostTab {
+    color: #4d4d4d;
+    background-color: #f9f9f9; 
+  }
+
+.rtsLI
+{
+   border-radius: 5px 5px 0 0;
+   -moz-border-radius: 5px 5px 0 0;
+   -webkit-border-radius: 5px 5px 0 0;
+   behavior: url(/js/pie/PIE.htc); /* remove if you don't care about IE8 */
+   margin-left: 15px !important;
+}
+
+html .RadTabStrip_SearchSkin {
+  color: #ffffff;
+  font: 100 16px 'Arimo', "Segoe UI", Arial, Helvetica, sans-serif;
+  line-height: 2.8; }
+  html .RadTabStrip_SearchSkin .rtsDisabled .rtsTxt {
+    opacity: .5;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    /* IE 5-7 */
+    filter: alpha(opacity=50); }
+  html .RadTabStrip_SearchSkin .rtsLink {
+    padding: 0 0px;
+    color: #3e3e3e; }
+  html .RadTabStrip_SearchSkin .rtsIn {
+      margin-right: 5px;
+      margin-left: 10px;
+  }
+  html .RadTabStrip_SearchSkin .rtsTxt {
+    padding: 0; }
+  html .RadTabStrip_SearchSkin .rtsLevel1 .rtsLink {
+    margin: 0 0 0 0;
+    background-color: #f9f9f9; }
+  html .RadTabStrip_SearchSkin .rtsLevel1 .rtsLink:hover {
+    background-color: #e8e8e8; }
+  html .RadTabStrip_SearchSkin .rtsLevel1 .rtsSelected,
+  html .RadTabStrip_SearchSkin .rtsLevel1 .rtsSelected:hover {
+    border-color: #436081;
+    color: #ffffff;
+    background-color: #436081; }
+  html .RadTabStrip_SearchSkin .rtsLevel1 .rtsDisabled,
+  html .RadTabStrip_SearchSkin .rtsLevel1 .rtsDisabled:hover {
+    border-color: #a0a0a0;
+    background: #f9f9f9; }
+  html .RadTabStrip_SearchSkin .rtsLevel1 .rtsFirst .rtsLink {
+    margin-left: 0; 
+  }
+  html .RadTabStrip_SearchSkin .rtsLevel2 {
+    padding: 1px;
+    width: auto;
+    background-color: #436081; }
+    html .RadTabStrip_SearchSkin .rtsLevel2 .rtsLink {
+      margin: 0 0 0 0px;
+      border: 1px solid #436081;
+      color: #ffffff; }
+    html .RadTabStrip_SearchSkin .rtsLevel2 .rtsLink:hover {
+      border-color: #ffffff; }
+    html .RadTabStrip_SearchSkin .rtsLevel2 .rtsSelected,
+    html .RadTabStrip_SearchSkin .rtsLevel2 .rtsSelected:hover {
+      border-color: #ffffff; }
+    html .RadTabStrip_SearchSkin .rtsLevel2 .rtsFirst .rtsLink {
+      margin-left: 0; }
+  html .RadTabStrip_SearchSkin .rtsScroll {
+    height: auto; }
+  html .RadTabStrip_SearchSkin .rtsNextArrow,
+  html .RadTabStrip_SearchSkin .rtsPrevArrow,
+  html .RadTabStrip_SearchSkin .rtsPrevArrowDisabled,
+  html .RadTabStrip_SearchSkin .rtsNextArrowDisabled {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #a0a0a0;
+    border-radius: 34px;
+    background-color: #f9f9f9;
+    background-image: url('../Common/MetroTouch/metrotouch-sprite.png'); }
+  html .RadTabStrip_SearchSkin .rtsNextArrow,
+  html .RadTabStrip_SearchSkin .rtsNextArrow:hover {
+    background-position: -11px -161px; }
+  html .RadTabStrip_SearchSkin .rtsNextArrowDisabled,
+  html .RadTabStrip_SearchSkin .rtsNextArrowDisabled:hover {
+    background-position: -11px -161px; }
+  html .RadTabStrip_SearchSkin .rtsPrevArrow,
+  html .RadTabStrip_SearchSkin .rtsPrevArrow:hover {
+    background-position: -11px -111px; }
+  html .RadTabStrip_SearchSkin .rtsPrevArrowDisabled,
+  html .RadTabStrip_SearchSkin .rtsPrevArrowDisabled:hover {
+    background-position: -11px -111px; }
+
+.RadTabStrip_SearchSkin.RadTabStripVertical .rtsLevel1 .rtsLink {
+  margin: 0;
+  border-width: 0 1px 1px; }
+.RadTabStrip_SearchSkin.RadTabStripVertical .rtsLevel1 .rtsFirst .rtsLink {
+  border-top-width: 1px; }
+
+.RadTabStripTop_SearchSkin .rtsLevel1 {
+  border-bottom: 0px solid #436081; }
+  .RadTabStripTop_SearchSkin .rtsLevel1 .rtsLink {
+    border-bottom: 0; }
+
+.RadTabStripBottom_SearchSkin .rtsLevel1 {
+  border-top: 0px solid #436081; }
+  .RadTabStripBottom_SearchSkin .rtsLevel1 .rtsLink {
+    border-top-width: 0; }
+
+.RadTabStripLeft_SearchSkin .rtsLink {
+  border-right-width: 0; }
+
+.RadTabStripRight_SearchSkin .rtsLink {
+  border-left: 0; }
+
+html .RadTabStrip_SearchSkin_disabled .rtsLevel1 .rtsLink {
+  border-color: #c5c5c5;
+  color: #c5c5c5;
+  cursor: default; }
+  html .RadTabStrip_SearchSkin_disabled .rtsLevel1 .rtsLink:hover {
+    background-color: #f9f9f9; }
+html .RadTabStrip_SearchSkin_disabled .rtsDisabled {
+  opacity: 1; }
+
+/** DropClues */
+.rtsDropClue_SearchSkin {
+  width: 16px;
+  height: 16px;
+  background-image: url('../Common/MetroTouch/metrotouch-sprite.png'); }
+
+.rtsDropClueTop_SearchSkin {
+  margin-top: -16px;
+  margin-left: -8px;
+  background-position: -17px -67px; }
+
+.rtsDropClueRight_SearchSkin {
+  margin-top: -8px;
+  background-position: -17px -117px; }
+
+.rtsDropClueBottom_SearchSkin {
+  margin-left: -8px;
+  background-position: -17px -17px; }
+
+.rtsDropClueLeft_SearchSkin {
+  margin-top: -8px;
+  margin-left: -16px;
+  background-position: -17px -167px; }

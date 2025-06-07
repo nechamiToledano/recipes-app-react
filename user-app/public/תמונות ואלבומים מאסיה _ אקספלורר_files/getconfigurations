@@ -1,1 +1,0 @@
-window.resourcesVersion = '1.0.0.00502202510674';window.appHost = 'https://app.glassix.com'; window.cdnHost = 'https://cdn.glassix.com';window.serverDateTimeDifferenceInSeconds = (1738771969110 - new Date().getTime()) / 1000;window.instrumentationKey = '12624fbc-f331-4e59-a203-84694cb48c1c';window.environment = 'prod';
